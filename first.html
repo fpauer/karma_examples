@@ -12,6 +12,12 @@
     var calculator = {
         sum: function(x, y) {
             return x + y;
+        },
+        subtract: function(x, y) {
+            return x-y;
+        },
+        divide: function(x, y) {
+            return (y===0?0:x/y);
         }
     }
 
@@ -21,6 +27,22 @@
             expect(calculator.sum(1, 1)).toBe(2);
         });
 
+
+        it('7 - 3 should equal 4', function () {
+            expect(calculator.subtract(7, 3)).toBe(4);
+        });
+
+        it('3 - 7 should equal -4', function () {
+            expect(calculator.subtract(3, 7)).toBe(-4);
+        });
+
+        it('7 / 0 should equal 0', function () {
+            expect(calculator.divide(7, 0)).toBe(0);
+        });
+
+        it('7 / 2 should equal 3.5', function () {
+            expect(calculator.divide(7, 2)).toBe(3.5);
+        });
     });
 
 </script>
