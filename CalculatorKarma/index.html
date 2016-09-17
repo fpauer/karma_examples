@@ -1,0 +1,16 @@
+<html>
+<head>
+    <script type="text/javascript" src="lib/angular.min.js"></script>
+</head>
+<body>
+<!-- This div element corresponds to the  CalculatorController we created via the JavaScript-->
+<div ng-controller="CalculatorController">
+    <input ng-model="x" type="number">
+    <input ng-model="y" type="number">
+    <strong>{{z}}</strong>
+    <!-- the value for ngClick maps to the sum function within the controller body -->
+    <input type="button" ng-click="sum()" value="+">
+</div>
+</body>
+<script type="text/javascript" src="app/calculator.controller.js"></script>
+</html>
