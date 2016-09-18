@@ -20,10 +20,12 @@ module.exports = function(config) {
       './node_modules/angular-mocks/angular-mocks.js',                 // loads our modules for tests
       './app/services/users/users.js',                                 // our Users factory
       './app/services/pokemon/pokemon.js',
+      './app/components/profile/profile.js',
       './app/components/users/users.js',
       './app/app.js',
       './app/services/users/users.spec.js',
       './app/services/pokemon/pokemon.spec.js',
+      './app/components/profile/profile.spec.js',
       './app/components/users/users.spec.js'
     ],
 
