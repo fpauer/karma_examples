@@ -13,6 +13,10 @@
                     vm.user.pokemon.id = result.id;
                     vm.user.pokemon.image = result.sprites.front_default;
                     vm.user.pokemon.type = result.types[0].type.name;
+                })
+                .catch(function(result) {
+                    // Add the default placeholder image
+                    vm.user.pokemon.image = 'http://i.imgur.com/HddtBOT.png';
                 });
         })
         .config(function($stateProvider) {

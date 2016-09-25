@@ -12,6 +12,11 @@ describe('components.profile', function() {
         }]
     };
 
+    // Add mocked Pokéapi response
+    var RESPONSE_ERROR = {
+        'detail': 'Not found.'
+    };
+
     // Load ui.router and our components.profile module which we'll create next
     beforeEach(angular.mock.module('ui.router'));
     beforeEach(angular.mock.module('api.pokemon'));
@@ -89,6 +94,39 @@ describe('components.profile', function() {
             expect(ProfileController.user.pokemon.name).toEqual('growlithe');
             expect(ProfileController.user.pokemon.image).toContain('.png');
             expect(ProfileController.user.pokemon.type).toEqual('fire');
+        });
+    });
+
+    // Add our new test
+    describe('Profile Controller with a valid resolved user and an invalid Pokemon', function () {
+        var singleUser, ProfileController;
+
+        beforeEach(function() {
+            // Update Pokémon name
+            singleUser = {
+                id: '2',
+                name: 'Bob',
+                role: 'Developer',
+                location: 'New York',
+                twitter: 'billybob',
+                pokemon: { name: 'godzilla' }
+            };
+
+            spyOn(PokemonFactory, "findByName").and.callThrough();
+
+            ProfileController = $controller('ProfileController', { resolvedUser: singleUser, Pokemon: PokemonFactory });
+        });
+
+        it('should call Pokemon.findByName and default to a placeholder image', function() {
+            expect(ProfileController.user.pokemon.image).toBeUndefined();
+
+            // Declare the endpoint we expect our service to hit and provide it with our mocked return values
+            $httpBackend.whenGET(API + singleUser.pokemon.name).respond(404, $q.reject(RESPONSE_ERROR));
+            $httpBackend.flush();
+
+            // Add expectation that our image will be set to a placeholder image
+            expect(PokemonFactory.findByName).toHaveBeenCalledWith('godzilla');
+            expect(ProfileController.user.pokemon.image).toEqual('http://i.imgur.com/HddtBOT.png');
         });
     });
 });
