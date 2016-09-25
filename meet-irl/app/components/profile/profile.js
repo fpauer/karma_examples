@@ -3,10 +3,17 @@
 
     // Define the component and controller we loaded in our test
     angular.module('components.profile', [])
-        .controller('ProfileController', function(resolvedUser, Pokemon) {
+        .controller('ProfileController', function(resolvedUser, Pokemon, $state) {
             var vm = this;
             vm.user = resolvedUser;
-            
+
+            // Set the resolvedUser if it exists, otherwise redirect to our 404 page
+            if (resolvedUser) {
+                vm.user = resolvedUser;
+            } else {
+                return $state.go('404');
+            }
+
             // Call our Pokemon service using our resolved user's Pokemon
             Pokemon.findByName(vm.user.pokemon.name)
                 .then(function(result) {

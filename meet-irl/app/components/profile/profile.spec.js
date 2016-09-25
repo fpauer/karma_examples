@@ -1,5 +1,5 @@
 describe('components.profile', function() {
-    var $controller, PokemonFactory, $q, $httpBackend;
+    var $controller, PokemonFactory, $q, $httpBackend, $state;
     var API = 'http://pokeapi.co/api/v2/pokemon/';
     var RESPONSE_SUCCESS = {
         'id': 58,
@@ -23,11 +23,12 @@ describe('components.profile', function() {
     beforeEach(angular.mock.module('components.profile'));
 
     // Inject Pokemon factory, $q, and $httpBackend for testing HTTP requests
-    beforeEach(inject(function(_$controller_, _Pokemon_, _$q_, _$httpBackend_) {
+    beforeEach(inject(function(_$controller_, _Pokemon_, _$q_, _$httpBackend_, _$state_) {
         $controller = _$controller_;
         PokemonFactory = _Pokemon_;
         $q = _$q_;
         $httpBackend = _$httpBackend_;
+        $state = _$state_;
     }));
 
     describe('ProfileController', function() {
@@ -127,6 +128,26 @@ describe('components.profile', function() {
             // Add expectation that our image will be set to a placeholder image
             expect(PokemonFactory.findByName).toHaveBeenCalledWith('godzilla');
             expect(ProfileController.user.pokemon.image).toEqual('http://i.imgur.com/HddtBOT.png');
+        });
+    });
+
+
+    describe('Profile Controller with an invalid resolved user', function() {
+        var singleUser, ProfileController;
+
+        beforeEach(function() {
+            // Add spy to $state service
+            spyOn($state, "go");
+            spyOn(PokemonFactory, "findByName");
+
+            // Add $state service as a dependency to our controller
+            ProfileController = $controller('ProfileController', { resolvedUser: singleUser, Pokemon: PokemonFactory, $state: $state });
+        });
+
+        it('should redirect to the 404 page', function() {
+            expect(ProfileController.user).toBeUndefined();
+            expect(PokemonFactory.findByName).not.toHaveBeenCalled();
+            expect($state.go).toHaveBeenCalledWith('404');
         });
     });
 });
