@@ -11,7 +11,7 @@ describe('components.profile', function() {
             'type': { 'name': 'fire' }
         }]
     };
-    
+
     // Load ui.router and our components.profile module which we'll create next
     beforeEach(angular.mock.module('ui.router'));
     beforeEach(angular.mock.module('api.pokemon'));
