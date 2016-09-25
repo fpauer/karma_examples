@@ -37,7 +37,7 @@
                     role: 'Designer',
                     location: 'LA',
                     twitter: 'dabill',
-                    pokemon: { name: 'barney' }
+                    pokemon: { name: 'pikachu' }
                 }
             ];
             // Defining all to make our test pass. It doesn't need to do anything yet.

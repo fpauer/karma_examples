@@ -33,7 +33,7 @@ describe('Users factory', function() {
             role: 'Designer',
             location: 'LA',
             twitter: 'dabill',
-            pokemon: { name: 'barney' }
+            pokemon: { name: 'pikachu' }
         }
     ];
     //The single user we expect to receive when calling findById('2')
